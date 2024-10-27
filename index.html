@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة التحكم - نظام إدارة الحجوزات</title>
+    
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js">
+     
+
+    </script>
+    
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">لوحة التحكم</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"
+              >الرئيسية <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#add-booking">إضافة حجز</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#all-patients">عرض الحالات</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#reports">التقارير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">تسجيل خروج</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+      <div class="container">
+        <div class="dashboard-header">
+          <h1 class="animate__animated animate__bounceInDown">لوحة التحكم لنظام إدارة الحجوزات</h1>
+          <p class="animate__animated animate__fadeIn">مرحباً بك، يمكنك الإطلاع على ملخص للحالات وإدارة الحجوزات بسهولة.</p>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-4">
+            <div class="stat-card animate__animated animate__fadeInLeft">
+              <h3 id="bookedCount"></h3>
+              <p>حالات الحجز المسبق</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="stat-card animate__animated animate__fadeInUp">
+              <h3 id="waitingCount"></h3>
+              <p>حالات الانتظار</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="stat-card animate__animated animate__fadeInRight">
+              <h3 id="emergencyCount"></h3>
+              <p>حالات الطوارئ</p>
+            </div>
+          </div>
+        </div>
+  
+        <div id="add-booking" class="section-title animate__animated animate__fadeIn">إضافة حجز جديد</div>
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="stat-card">
+              <button
+                class="btn btn-primary btn-block animate__animated animate__pulse"
+                data-toggle="modal"
+                data-target="#bookingModal"
+              
+"
+              >
+                إضافة حجز جديد
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="all-patients" class="section-title animate__animated animate__fadeIn">عرض الحالات الحالية</div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="stat-card">
+              <h5>حالات الحجز المسبق</h5>
+              <button
+                class="btn btn-info btn-block animate__animated animate__pulse"
+                onclick="showSection('مسبق')"
+              >
+                عرض الكل
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card">
+              <h5>حالات الانتظار</h5>
+              <button
+                class="btn btn-info btn-block animate__animated animate__pulse"
+                onclick="showSection('انتظار')"
+              >
+                عرض الكل
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="stat-card">
+              <h5>حالات الطوارئ</h5>
+              <button
+                class="btn btn-info btn-block animate__animated animate__pulse"
+                onclick="showSection('طوارئ')"
+              >
+                عرض الكل
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <div id="reports" class="section-title animate__animated animate__fadeIn">التقارير</div>
+        <div id="monthly-reports" class="section-title animate__animated animate__fadeIn">التقارير الشهرية</div>
+        <div class="row p-2">
+            <div class="col-md-6 offset-md-3 ">
+                <div class="stat-card">
+                    <button
+                        class="btn btn-success btn-block animate__animated animate__pulse"
+                        onclick="generateMonthlyReport()"
+                    >
+                        عرض التقارير الشهرية
+                    </button>
+                </div>
+                <div id="reportContent" class="patients-list hidden"></div>
+            </div>
+        </div>
+        
+  
+        <div id="patients-section" class="hidden">
+          <h2 id="patients-title" class="text-center animate__animated animate__fadeIn"></h2>
+          <div id="patients-content" class="patients-list">
+            
+          </div>
+        </div>
+      </div>
+  
+      <div
+        class="modal fade animate__animated animate__zoomIn"
+        id="bookingModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="bookingModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="bookingModalLabel">إضافة حجز</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="bookingForm" onsubmit="return handleFormSubmission()">
+                <div class="form-group">
+                  <label for="patientName">اسم المريض</label>
+                  <input type="text" class="form-control" id="patientName" required />
+                  <div class="error" id="nameError"></div>
+                </div>
+                <div class="form-group">
+                  <label for="bookingDate">تاريخ الحجز</label>
+                  <input type="date" class="form-control" id="bookingDate" required />
+                  <div class="error" id="dateError"></div>
+                </div>
+                <div class="form-group">
+                  <label for="bookingType">نوع الحجز</label>
+                  <select class="form-control" id="bookingType">
+                    <option value="مسبق">مسبق</option>
+                    <option value="انتظار">انتظار</option>
+                    <option value="طوارئ">طوارئ</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="phoneNumber">رقم الهاتف</label>
+                  <input type="text" class="form-control" id="phoneNumber" required />
+                  <div class="error" id="phoneError"></div>
+                </div>
+                <div class="form-group">
+                  <label for="bloodType">زمرة الدم</label>
+                  <select class="form-control" id="bloodType" required>
+                    <option value="" disabled selected>اختر زمرة الدم</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">إضافة حجز</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  </body>
+</html>
