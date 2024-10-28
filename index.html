@@ -4,24 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لوحة التحكم - نظام إدارة الحجوزات</title>
-    
-    <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="index.css">
-    <script src="index.js">
-     
-
-    </script>
-    
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!-- Navbar -->
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">لوحة التحكم</a>
         <button
@@ -59,10 +51,11 @@
       </nav>
   
       <div class="container">
-        <div class="dashboard-header">
-          <h1 class="animate__animated animate__bounceInDown">لوحة التحكم لنظام إدارة الحجوزات</h1>
-          <p class="animate__animated animate__fadeIn">مرحباً بك، يمكنك الإطلاع على ملخص للحالات وإدارة الحجوزات بسهولة.</p>
-        </div>
+        <div class="dashboard-header text-center my-5 animate__animated animate__fadeIn">
+          <h1 class="display-5 font-weight-bold text-primary">لوحة التحكم لنظام إدارة الحجوزات</h1>
+          <p class="lead text-muted">  يمكنك الإطلاع على ملخص للحالات وإدارة الحجوزات بسهولة</p>
+      </div>
+      
   
         <div class="row">
           <div class="col-md-4">
@@ -86,85 +79,126 @@
             </div>
           </div>
         </div>
-  
-        <div id="add-booking" class="section-title animate__animated animate__fadeIn">إضافة حجز جديد</div>
         <div class="row">
-          <div class="col-md-6 offset-md-3">
-            <div class="stat-card">
-              <button
-                class="btn btn-primary btn-block animate__animated animate__pulse"
-                data-toggle="modal"
-                data-target="#bookingModal"
-              
-"
-              >
-                إضافة حجز جديد
-              </button>
-            </div>
+          <div class="col-md-8 offset-md-2">
+            <canvas id="bookingChart" width="400" height="200"></canvas>
           </div>
         </div>
-        <div id="all-patients" class="section-title animate__animated animate__fadeIn">عرض الحالات الحالية</div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="stat-card">
-              <h5>حالات الحجز المسبق</h5>
-              <button
-                class="btn btn-info btn-block animate__animated animate__pulse"
-                onclick="showSection('مسبق')"
-              >
-                عرض الكل
-              </button>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="stat-card">
-              <h5>حالات الانتظار</h5>
-              <button
-                class="btn btn-info btn-block animate__animated animate__pulse"
-                onclick="showSection('انتظار')"
-              >
-                عرض الكل
-              </button>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="stat-card">
-              <h5>حالات الطوارئ</h5>
-              <button
-                class="btn btn-info btn-block animate__animated animate__pulse"
-                onclick="showSection('طوارئ')"
-              >
-                عرض الكل
-              </button>
-            </div>
-          </div>
-        </div>
-  
-        <div id="reports" class="section-title animate__animated animate__fadeIn">التقارير</div>
-        <div id="monthly-reports" class="section-title animate__animated animate__fadeIn">التقارير الشهرية</div>
-        <div class="row p-2">
-            <div class="col-md-6 offset-md-3 ">
-                <div class="stat-card">
-                    <button
-                        class="btn btn-success btn-block animate__animated animate__pulse"
-                        onclick="generateMonthlyReport()"
-                    >
-                        عرض التقارير الشهرية
-                    </button>
-                </div>
-                <div id="reportContent" class="patients-list hidden"></div>
-            </div>
-        </div>
-        
-  
-        <div id="patients-section" class="hidden">
-          <h2 id="patients-title" class="text-center animate__animated animate__fadeIn"></h2>
-          <div id="patients-content" class="patients-list">
-            
-          </div>
-        </div>
+        <div id="add-booking" class="section-title text-center my-4 animate__animated animate__fadeIn">
+          <h2 class="font-weight-bold text-primary">إضافة حجز جديد</h2>
+          <p class="text-muted">يمكنك إضافة حجز جديد بسهولة وسرعة</p>
+     
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+      <div class="stat-card p-4 shadow-lg rounded-lg text-center bg-light">
+          <button
+              class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold animate__animated animate__pulse animate__infinite"
+              data-toggle="modal"
+              data-target="#bookingModal"
+              style="font-size: 1.2rem;"
+          >
+              <i class="fas fa-plus mr-2"></i> إضافة حجز جديد
+          </button>
       </div>
+  </div>
+</div>
+<div id="all-patients" class="section-title text-center my-4 animate__animated animate__fadeIn">
+  <h2 class="font-weight-bold text-primary">عرض الحالات الحالية</h2>
+  <p class="text-muted">تصفح جميع حالات المرضى بسهولة</p>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+      <div class="stat-card p-4 shadow-lg rounded-lg text-center bg-light">
+          <h5 class="text-info">
+              <i class="fa-regular fa-bookmark"></i> حالات الحجز المسبق
+          </h5>
+          <button
+              class="btn btn-info btn-block animate__animated animate__pulse"
+              onclick="showSection('مسبق')"
+          >
+              عرض الكل
+          </button>
+      </div>
+  </div>
   
+  <div class="col-md-4">
+      <div class="stat-card p-4 shadow-lg rounded-lg text-center bg-light">
+          <h5 class="text-dark">
+              <i class="fa-solid fa-hourglass-start"></i> حالات الانتظار
+          </h5>
+          <button
+              class="btn btn-info btn-block animate__animated animate__pulse"
+              onclick="showSection('انتظار')"
+          >
+              عرض الكل
+          </button>
+      </div>
+  </div>
+
+  <div class="col-md-4">
+      <div class="stat-card p-4 shadow-lg rounded-lg text-center bg-light">
+          <h5 class="text-danger">
+              <i class="fa-solid fa-kit-medical"></i> حالات الطوارئ
+          </h5>
+          <button
+              class="btn btn-info btn-block animate__animated animate__pulse"
+              onclick="showSection('طوارئ')"
+          >
+              عرض الكل
+          </button>
+      </div>
+  </div>
+</div>
+
+
+<div id="reports" class="section-title text-center my-4 animate__animated animate__fadeIn">
+  <h2 class="font-weight-bold text-primary">التقارير</h2>
+  <p class="text-muted">احصل على تقارير مفصلة عن الحجوزات</p>
+</div>
+
+<div id="monthly-reports" class="section-title text-center animate__animated animate__fadeIn mb-4">
+  <h3 class="text-success">
+      <i class="fa-regular fa-file"></i> التقارير الشهرية
+  </h3>
+</div>
+
+<div class="row p-4">
+  <div class="col-md-6 offset-md-3">
+      <div class="stat-card p-4 shadow-lg rounded-lg text-center bg-light">
+          <h5 class="font-weight-bold mb-3">التقارير الشهرية</h5>
+          <button
+              class="btn btn-success btn-block animate__animated animate__pulse"
+              onclick="generateMonthlyReport()"
+          >
+              <i class="fas fa-file-alt"></i> عرض التقارير الشهرية
+          </button>
+      </div>
+      <div id="reportContent" class="patients-list hidden mt-3"></div>
+  </div>
+</div>
+
+
+<div id="patients-section" class="hidden">
+  <h2 id="patients-title" class="text-center animate__animated animate__fadeIn mb-4">حالات المرضى</h2>
+  <div id="patients-content" class="patients-list p-4">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="stat-card p-4 shadow-lg rounded-lg bg-light text-center">
+                  <i class="fas fa-exclamation-triangle text-warning fa-3x mb-3"></i>
+                  <p class="lead">لا توجد حالات متاحة </p>
+                <p> إضافة حجز جديد </p>
+                  <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#bookingModal">
+                      إضافة حجز جديد
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+      </div> 
       <div
         class="modal fade animate__animated animate__zoomIn"
         id="bookingModal"
@@ -231,9 +265,7 @@
           </div>
         </div>
       </div>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   

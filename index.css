@@ -1,9 +1,13 @@
-
 body {
-  background-color: #f7f9fc;
+  font-family: "Cairo", sans-serif;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  font-family: "Roboto", sans-serif;
 }
+
 .navbar {
   margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .dashboard-header {
   text-align: center;
@@ -15,20 +19,29 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
   text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .stat-card h3 {
   font-size: 2.5rem;
   color: #007bff;
   margin: 10px 0;
 }
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
 .section-title {
+  text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
   margin-top: 20px;
   text-align: center;
 }
+
 .hidden {
   display: none;
 }
@@ -39,6 +52,7 @@ body {
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .patient-item {
   margin-bottom: 15px;
   display: flex;
@@ -46,15 +60,18 @@ body {
   padding: 10px;
   border: 1px solid #dee2e6;
   border-radius: 5px;
-  background-color: #f9f9f9; 
-  transition: background-color 0.2s; 
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f9f9f9;
+
+  transition: all 0.3s ease;
 }
-.patient-item:hover {
-  background-color: #e9ecef;
+.patients-list .patient-item:hover {
+  background-color: #f1f3f5;
 }
+
 .patient-details {
   font-size: 1.1rem;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 .btn-container {
   display: flex;
@@ -65,9 +82,6 @@ body {
   color: red;
   font-size: 0.9rem;
   margin-top: 5px;
-}
-.patients-list {
-  padding: 10px;
 }
 
 .patient-item:hover {
@@ -92,55 +106,13 @@ body {
     justify-content: center;
   }
 }
-body {
-    font-family: 'Cairo', sans-serif;
-    background-color: #f8f9fa;
-    overflow-x: hidden;
-  }
-  
-  .navbar {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .section-title {
-    text-align: center;
-    font-size: 24px;
-    margin: 40px 0 20px;
-    color: #343a40;
-    font-weight: bold;
-  }
-  
-  .stat-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .stat-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .btn {
-    border-radius: 25px;
-    transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .btn:hover {
-    background-color: #495057;
-    transform: scale(1.1);
-  }
-  
-  .patients-list .patient-item {
-    border-bottom: 1px solid #dee2e6;
-    padding: 10px 0;
-    transition: all 0.3s ease;
-  }
-  
-  .patients-list .patient-item:hover {
-    background-color: #f1f3f5;
-  }
-  
+
+.btn {
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+  background-color: #495057;
+  transform: scale(1.1);
+}
